@@ -4,6 +4,7 @@ namespace Julienbourdeau\RouteUsage\Console\Commands;
 
 use Illuminate\Foundation\Console\RouteListCommand;
 use Julienbourdeau\RouteUsage\RouteUsage;
+use Symfony\Component\Console\Input\InputOption;
 
 class UsageRouteCommand extends RouteListCommand
 {
