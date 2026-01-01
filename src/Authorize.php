@@ -14,7 +14,6 @@ class Authorize
 
     protected function check($request)
     {
-        return App::environment('local') ||
-            Gate::check('viewRouteUsage', [$request->user()]);
+        return Gate::check('viewRouteUsage', [$request->user()]);
     }
 }
