@@ -13,12 +13,31 @@
 <body class="bg-slate-100 text-slate-800 antialiased">
 
 <div class="mx-8 my-10">
+
     <!-- Header -->
     <div class="mb-6">
         <h1 class="text-2xl font-semibold tracking-tight">Route Usage</h1>
         <p class="text-sm text-slate-500 mt-1">
             All registered routes with last access time
         </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white rounded-xl border border-slate-200 p-4">
+            <div class="text-sm text-slate-500">Total Routes</div>
+            <div id="totalRoutes" class="text-2xl font-semibold mt-1">0</div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-4">
+            <div class="text-sm text-slate-500">Used Routes</div>
+            <div id="usedRoutes" class="text-2xl font-semibold text-green-600 mt-1">0</div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-4">
+            <div class="text-sm text-slate-500">Unused Routes</div>
+            <div id="unusedRoutes" class="text-2xl font-semibold text-slate-600 mt-1">0</div>
+        </div>
     </div>
 
     <!-- Table -->
@@ -117,12 +136,24 @@
     </div>
 </div>
 
-<!-- Sorting Script -->
+<!-- JS: Sorting + Counters -->
 <script>
     const headers = document.querySelectorAll('.sortable');
     const tbody = document.getElementById('routeTableBody');
 
     let currentSort = { key: null, dir: 'asc' };
+
+    function updateStats() {
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        const total = rows.length;
+        const used = rows.filter(r => Number(r.dataset.lastUsed) > 0).length;
+        const unused = total - used;
+
+        document.getElementById('totalRoutes').textContent = total;
+        document.getElementById('usedRoutes').textContent = used;
+        document.getElementById('unusedRoutes').textContent = unused;
+    }
 
     headers.forEach(header => {
         header.addEventListener('click', () => {
@@ -142,13 +173,7 @@
                 let aVal = a.dataset[key] ?? '';
                 let bVal = b.dataset[key] ?? '';
 
-                if (type === 'number') {
-                    return currentSort.dir === 'asc'
-                        ? aVal - bVal
-                        : bVal - aVal;
-                }
-
-                if (type === 'date') {
+                if (type === 'number' || type === 'date') {
                     return currentSort.dir === 'asc'
                         ? aVal - bVal
                         : bVal - aVal;
@@ -162,6 +187,9 @@
             rows.forEach(row => tbody.appendChild(row));
         });
     });
+
+    // Initial stats
+    updateStats();
 </script>
 
 </body>
