@@ -77,4 +77,11 @@ class UsageRouteCommand extends RouteListCommand
             return 'HEAD' === $r['method'];
         })->values();
     }
+    
+    protected function getOptions()
+    {
+        return array_merge(parent::getOptions(), [
+            ['compact', null, \Symfony\Component\Console\Input\InputOption::VALUE_NONE, 'Display compact route list'],
+        ]);
+    }
 }
