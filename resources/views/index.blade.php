@@ -20,7 +20,7 @@
                     </th>
                     <th class="px-6 pt-6 pb-4">Route <div>&nbsp;</div></th>
                     <th class="px-6 pt-6 pb-4">Method <div>&nbsp;</div></th>
-                    <th class="px-6 pt-6 pb-4">Code
+                    <th class="px-6 pt-6 pb-4">Status code
                         <div>@include('route-usage::helpers.sorting_link', ['orderByAttribute' => 'status_code'])</div>
                     </th>
                     <th class="px-6 pt-6 pb-4">Last used
@@ -52,7 +52,7 @@
                     </td>
                     <td class="border-t w-px">
                         <div class="px-4 flex items-center" tabindex="-1">
-                            {{ $route->updated_at->diffForHumans() }}
+                            {{ $route->updated_at ? $route->updated_at->diffForHumans() : 'Never' }}
                         </div>
                     </td>
                 </tr>
